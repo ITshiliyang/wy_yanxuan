@@ -1,4 +1,4 @@
-# gshop
+# wy_yanxuan
 
 > A Vue.js project
 
