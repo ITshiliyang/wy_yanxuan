@@ -11,3 +11,7 @@ export const GETFOURFOLDLIST = 'getFourFoldList'
 export const GETHOMECATEGORYMODULE = 'getHomeCategoryModule'
 //------------------------------category-------------------------------------
 export const GETCATEGORYL1LIST = 'getCategoryL1List'
+//------------------------------searchPic-------------------------------------
+export const GETTABLIST = 'getTabList'
+export const GETMANUALLIST = 'getManualList'
+export const AGAINGETMANUAL = 'againGetManual'

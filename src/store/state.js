@@ -23,5 +23,8 @@ export default {
   fourFoldList: [],
   homeCategoryModule: [],
   //category数据
-  categoryL1List: []
+  categoryL1List: [],
+  //searchPic数据
+  manualList: [],
+  tabList:[]
 }

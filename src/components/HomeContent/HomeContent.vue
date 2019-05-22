@@ -1,7 +1,7 @@
 <template>
   <div class="homeContent" :style="{'height': `${homeContainerHeight}px`}">
     <div class="homeWrap" ref="homeWrap">
-      <div class="homeSwiper">
+      <div class="homeSwiper" @click="changeHeight">
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <img class="swiper-slide" :src="item" alt="" v-for="(item, index) in swiperList" :key="index">
@@ -197,6 +197,9 @@
       homeContainerHeight () {
         return document.documentElement.clientHeight - this.homeHeaderHeight - this.footerHeight
       },
+      // homeWrapHeight () {
+      //   return this.$refs.homeWrap.offsetHeight
+      // },
       PIFirst () {
         if (this.popularItemList) {
           return this.popularItemList.find(item => item.itemTagList.length === 0)
@@ -228,6 +231,9 @@
           click: true,
           scrollY: true
         })
+      },
+      changeHeight () {
+        this.homeWrapHeight = this.$refs.homeWrap.offsetHeight
       }
     },
     mounted () {
@@ -246,6 +252,11 @@
         }
       })
 
+      // this.$nextTick(() => {
+      //   this._initHomeContainerScroll()
+      // })
+    },
+    updated () {
       this.homeWrapHeight = this.$refs.homeWrap.offsetHeight
     },
     watch: {
@@ -257,11 +268,9 @@
         })
       },
       homeWrapHeight () {
-        setTimeout(() => {
-          this.$nextTick(() => {
-            this._initHomeContainerScroll()
-          })
-        }, 500)
+        this.$nextTick(() => {
+          this._initHomeContainerScroll()
+        })
       }
     }
   }

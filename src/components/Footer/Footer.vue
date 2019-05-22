@@ -44,6 +44,7 @@
     height 98px
     position fixed
     bottom 0
+    left 0
     display flex
     background-color #fff
     a

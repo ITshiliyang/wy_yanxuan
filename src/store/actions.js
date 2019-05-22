@@ -7,12 +7,18 @@ import {
   GETNEWITEMLIST,
   GETFOURFOLDLIST,
   GETHOMECATEGORYMODULE,
-  GETCATEGORYL1LIST
+  GETCATEGORYL1LIST,
+  GETMANUALLIST,
+  GETTABLIST,
+  AGAINGETMANUAL
 } from './mutations-type'
 
 import {
   reqHomeData,
-  reqCategoryList
+  reqCategoryList,
+  reqManual,
+  reqTabs,
+  reqAgainManual
 } from '../ajax'
 
 
@@ -88,6 +94,36 @@ export default {
     if (result.code === 0) {
       const data = result.data.categoryL1List
       commit(GETCATEGORYL1LIST, data)
+    }
+  },
+  //------------------------------category-------------------------------------
+  async getManualList ({commit}) {
+    const result = await reqManual()
+    if (result.code === '200') {
+      const data = result.data
+      commit(GETMANUALLIST, data)
+    }
+  },
+  async getAgainManual ({commit}, page) {
+    return new Promise(async (resolve) => {
+      let lastGet = false
+      const result = await reqAgainManual(page)
+      if (result.code === '200') {
+        const data = result.data
+        if (data.hasMore || !lastGet) {
+          lastGet = !data.hasMore
+          commit(AGAINGETMANUAL, data)
+        }
+        const code = result.code
+        resolve({code, lastGet})
+      }
+    })
+  },
+  async getTabList ({commit}) {
+    const result = await reqTabs()
+    if (result.code === '200') {
+      const data = result.data
+      commit(GETTABLIST, data)
     }
   },
 }

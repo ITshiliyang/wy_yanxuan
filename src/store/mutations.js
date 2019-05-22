@@ -10,6 +10,9 @@ import {
   GETFOURFOLDLIST,
   GETHOMECATEGORYMODULE,
   GETCATEGORYL1LIST,
+  GETMANUALLIST,
+  GETTABLIST,
+  AGAINGETMANUAL
 } from './mutations-type'
 
 
@@ -49,4 +52,16 @@ export default {
   [GETCATEGORYL1LIST] (state, categoryL1List) {
     state.categoryL1List = categoryL1List
   },
+  //------------------------------searchPic-------------------------------------
+  [GETMANUALLIST] (state, manualList) {
+    state.manualList = manualList
+  },
+  [GETTABLIST] (state, tabList) {
+    state.tabList = tabList
+  },
+  [AGAINGETMANUAL] (state, newManual) {
+    newManual.result.forEach(item => {
+      state.manualList.push(item)
+    })
+  }
 }
