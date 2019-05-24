@@ -26,13 +26,14 @@
         </ul>
       </div>
     </div>
-    <!--:style="{'height': `${contentHeight}px`}"-->
-    <router-view
-      :style="{
+    <keep-alive>
+      <router-view
+        :style="{
         'height': `${contentHeight}px`,
         'margin-top': `${headerHeight}px`,
       }"
-    />
+      />
+    </keep-alive>
   </div>
 </template>
 

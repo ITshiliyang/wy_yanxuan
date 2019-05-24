@@ -4,6 +4,8 @@ import Personal from '../pages/Personal/Personal'
 import SearchPic from '../pages/SearchPic/SearchPic'
 import Shopping from '../pages/Shopping/Shopping'
 import Search from '../pages/Search/Search'
+import PhoneLogin from '../pages/Personal/PhoneLogin'
+import EmailLogin from '../pages/Personal/EmailLogin'
 
 import Recommend from '../pages/SearchPic/Recommend'
 import BuyBack from '../pages/SearchPic/BuyBack'
@@ -25,7 +27,10 @@ export default [
   },
   {
     path: '/personal',
-    component: Personal
+    component: Personal,
+    meta: {
+      noFooter: true
+    }
   },
   {
     path: '/searchpic',
@@ -76,6 +81,20 @@ export default [
   {
     path: '/search',
     component: Search,
+    meta: {
+      noFooter: true
+    }
+  },
+  {
+    path: '/emaillogin',
+    component: EmailLogin,
+    meta: {
+      noFooter: true
+    }
+  },
+  {
+    path: '/phonelogin',
+    component: PhoneLogin,
     meta: {
       noFooter: true
     }

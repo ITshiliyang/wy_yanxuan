@@ -1,13 +1,24 @@
 <template>
   <div class="recommendContainer">
     <div class="recommendWrap">
-      <!-- v-for="(item, index) in manualList" v-if="manualList.length > 0"-->
       <ul v-for="(group, index) in manualList" v-if="manualList.length > 0">
-        <!-- :class="classType(item.type, item.pubType)"-->
         <li
           v-if="group.look && group.look !== null"
           class="look"
-        ></li>
+        >
+          <div class="lookWrap">
+            <div class="lookHeader">
+              <img :src="group.look.avatar" alt="">
+              <span>{{group.look.title}}</span>
+            </div>
+            <div class="lookDetail">{{group.look.content}}</div>
+            <img class="lookImg" :src="group.look.lookPics[0].picUrl"></img>
+            <div class="lookView">
+              <i class="iconfont icon-eye"></i>
+              <span>{{format(group.look.readCount)}}人看过</span>
+            </div>
+          </div>
+        </li>
         <li
           v-for="(item, index) in group.topics"
           :class="{
@@ -25,8 +36,7 @@
             <img class="columb-img" :src="item.picUrl"></img>
             <div class="column-view">
               <i class="iconfont icon-eye"></i>
-              <span>{{format(item.readCount)}}人看过
-              </span>
+              <span>{{format(item.readCount)}}人看过</span>
             </div>
           </div>
           <div class="rowWrap" v-else-if="item.style === 2">
@@ -39,7 +49,7 @@
               <div class="detailDown">{{item.subTitle}}</div>
               <div class="rowView">
                 <i class="iconfont icon-eye"></i>
-                <span>{{format(item.readCount)}}</span>
+                <span>{{format(item.readCount)}}人看过</span>
               </div>
             </div>
             <div class="rowRight">
@@ -47,8 +57,7 @@
             </div>
           </div>
         </li>
-        <!--<li class="slideshow"></li>
-        <li class="look"></li>-->
+        <!--<li class="slideshow"></li>-->
       </ul>
     </div>
   </div>
@@ -72,20 +81,24 @@
         this.recommendScroll = new BScroll('.recommendContainer', {
           probeType: 2,
           pullUpLoad:  {
-            threshold: 200
+            threshold: 10
           },
           scrollbar: {
             fade: true,
           }
         })
-        this.recommendScroll.on('pullingUp', async () => {
-          this.page++
-          const result = await this.$store.dispatch('getAgainManual',this.page)
-          if (result.code === '200' && !this.lastGet) {
-            this.lastGet = result.lastGet
-            this.recommendScroll.finishPullUp()
-            this.recommendScroll.refresh()
-          }
+        this.recommendScroll.on('pullingUp', () => {
+          clearTimeout(this.timeId)
+          this.timeId = setTimeout(async () => {
+            this.page++
+            const result = await this.$store.dispatch('getAgainManual',this.page)
+            if (result.code === '200' && !this.lastGet) {
+              this.recommendScroll.refresh()
+              this.lastGet = result.lastGet
+              this.recommendScroll.finishPullUp()
+
+            }
+          }, 50)
         })
       },
       format (number) {
@@ -182,7 +195,7 @@
                   border 1px solid #d9d9d9
                   margin-right 12px
                 span
-                  font-size 24px
+                  font-size 28px
               .detailUp
                 padding-top 32px
                 -webkit-line-clamp 2
@@ -224,6 +237,57 @@
               img
                 height 272px
                 display block
+        .look
+          box-sizing border-box
+          width 100%
+          background-color #fff
+          margin 20px 0
+          padding 26px 30px 20px
+          .lookWrap
+            .lookHeader
+              width 100%
+              height 56px
+              margin-bottom 16px
+              display flex
+              align-items center
+              img
+                width 54px
+                height 54px
+                border-radius 50%
+                border 1px solid #d9d9d9
+                margin-right 12px
+              span
+                font-size 26px
+            .lookDetail
+              width 100%
+              margin-bottom 20px
+              font-size 32px
+              line-height 46px
+              overflow hidden
+              text-overflow ellipsis
+              -webkit-box-orient vertical
+              white-space normal
+              display -webkit-box
+              -webkit-line-clamp 2
+            .lookImg
+              border-radius 6px
+              display block
+              width 100%
+              margin-bottom 16px
+            .lookView
+              width 100%
+              height 33.75px
+              margin-top 18px
+              display flex
+              i
+                font-size 36px
+                line-height 36px
+                color #999
+                margin-right 8px
+              span
+                font-size 24px
+                line-height 33.75px
+                color #999
   strong
     zoom 1
 </style>
